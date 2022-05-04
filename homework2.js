@@ -42,7 +42,7 @@ class Kitchen{
         var arrayLength = this.fridge.length;
 
         for (var i = 0; i < arrayLength; i++) {
-            console.log(this.fridge[i]);
+            // console.log(this.fridge[i]);
             if (this.fridge[i].name === ingridient.name){
                 this.fridge[i].value += ingridient.value
                 return
@@ -70,17 +70,18 @@ class Kitchen{
         var arrayLength = this.fridge.length;
 
         for (var i = 0; i < arrayLength; i++) {
-            console.log(this.fridge[i]);
+            // console.log(this.fridge[i]);
             if (this.fridge[i].name === ingridient.name ){
                 this.fridge[i].value -= ingridient.value
                 if (this.fridge[i].value < 0){
-                    throw 'Not enough ingridients in fridge'
+                    throw new Error("Not enough ingredients in fridge");
                 }
-                return
+                return;
             }
-            throw 'Not enough ingridients in fridge'
 
         }
+        throw new Error("Not enough ingredients in fridge");
+
     }
 }
 
@@ -123,11 +124,17 @@ async function test() {
         new Ingridient('meat', 3),
         new Ingridient('tomato', 2)
     ])
-    kitchen.fridge.push(new Ingridient('potato', 1))
-    console.log(kitchen.fridge);
-
+    // console.log(kitchen.fridge);
+    for (let ingredient of kitchen.fridge) {
+        console.log(ingredient)
+    }
     kitchen.order(new Bolognese()); // Bolognese extends Dish (cookingTime = 10)
-
+    kitchen.order(new Bolognese()); // Bolognese extends Dish (cookingTime = 10)
+    console.log("start")
+    for (let ingredient of kitchen.fridge) {
+        console.log(ingredient)
+    }
+    console.log("end")
 
     // kitchen.order(new MashedPotatoes()); // MashedPotatoes extends Dish (cookingTime = 8)
     // kitchen.order(new Steak()); // Steak extends Dish (cookingTime = 7)
@@ -141,4 +148,6 @@ async function test() {
 }
 console.log(10);
 test();
+// throw 'Not enough ingridients in fridge'
+
 console.log(20);
