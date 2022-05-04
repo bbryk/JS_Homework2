@@ -20,15 +20,15 @@ class Dish {
 
 class Ingridient{
     constructor(name, value){
-        this.name = name
-        this.value = value
+        this.name = name;
+        this.value = value;
     }
 }
 
 class Kitchen{
     constructor(){
-        this.fridge = []
-        this.orders = []
+        this.fridge = [];
+        this.orders = [];
     }
     addToFridge(arr){
         var arrayLength = arr.length;
@@ -42,20 +42,19 @@ class Kitchen{
         var arrayLength = this.fridge.length;
 
         for (var i = 0; i < arrayLength; i++) {
-            // console.log(this.fridge[i]);
             if (this.fridge[i].name === ingridient.name){
-                this.fridge[i].value += ingridient.value
-                return
+                this.fridge[i].value += ingridient.value;
+                return;
             }
             
 
         }
-        this.fridge.push(ingridient)
+        this.fridge.push(ingridient);
         return;
     }
     order(dish){
-        this.takeIngridiends(dish.ingridients)
-        this.orders.push(dish)
+        this.takeIngridiends(dish.ingridients);
+        this.orders.push(dish);
     }
 
     takeIngridiends(ingridients){
@@ -71,7 +70,7 @@ class Kitchen{
 
         for (var i = 0; i < arrayLength; i++) {
             if (this.fridge[i].name === ingridient.name ){
-                this.fridge[i].value -= ingridient.value
+                this.fridge[i].value -= ingridient.value;
                 if (this.fridge[i].value < 0){
                     throw new Error("Not enough ingredients in fridge");
                 }
@@ -84,14 +83,14 @@ class Kitchen{
     }
 
     cookFastestOrder(){
-        let fastestOrder = this.orders[0]
-        let curInd = 0
+        let fastestOrder = this.orders[0];
+        let curInd = 0;
         var arrayLength = this.orders.length;
 
         for (var i = 1; i < arrayLength; i++) {
             if (fastestOrder.cookingTime > this.orders[i].cookingTime){
-                fastestOrder = this.orders[i]
-                curInd = i
+                fastestOrder = this.orders[i];
+                curInd = i;
             }
         }
         this.orders.splice(curInd, 1);
@@ -103,7 +102,7 @@ class Kitchen{
         var arrayLength = this.orders.length;
 
         for (var i = 1; i < arrayLength; i++) {
-            await this.orders[i].cook()
+            await this.orders[i].cook();
         }
         
         let finishedOrders = this.orders;
@@ -116,16 +115,16 @@ class Kitchen{
 class Bolognese extends Dish{
     constructor(){
         super(10);
-        this.ingridients = [new Ingridient("meat",1), new Ingridient("spaghetti",1)]
-        this.name = "Bolognese"
+        this.ingridients = [new Ingridient("meat",1), new Ingridient("spaghetti",1)];
+        this.name = "Bolognese";
     }
 }
 
 class MashedPotatoes extends Dish{
     constructor(){
         super(8);
-        this.ingridients = [new Ingridient("potato",1)]
-        this.name = "MashedPotatoes"
+        this.ingridients = [new Ingridient("potato",1)];
+        this.name = "MashedPotatoes";
 
     }
 }
@@ -133,8 +132,8 @@ class MashedPotatoes extends Dish{
 class Steak extends Dish{
     constructor(){
         super(7);
-        this.ingridients = [new Ingridient("meat",1)]
-        this.name = "Steak"
+        this.ingridients = [new Ingridient("meat",1)];
+        this.name = "Steak";
 
     }
 }
@@ -142,8 +141,8 @@ class Steak extends Dish{
 class SteakAndFries extends Dish{
     constructor(){
         super(12);
-        this.ingridients = [new Ingridient("meat",1), new Ingridient("potato", 2)]
-        this.name = "SteakAndFries"
+        this.ingridients = [new Ingridient("meat",1), new Ingridient("potato", 2)];
+        this.name = "SteakAndFries";
 
     }
 }
@@ -157,27 +156,27 @@ async function test() {
         new Ingridient('spaghetti', 1),
         new Ingridient('meat', 3),
         new Ingridient('tomato', 2)
-    ])
-    let curDish = new Bolognese()
+    ]);
+    let curDish = new Bolognese();
     kitchen.order(curDish); // Bolognese extends Dish (cookingTime = 10)
-    console.log(curDish.name+" ordered ")
+    console.log(curDish.name+" ordered ");
 
-    curDish = new MashedPotatoes()
+    curDish = new MashedPotatoes();
     kitchen.order(curDish); // MashedPotatoes extends Dish (cookingTime = 8)
-    console.log(curDish.name+" ordered ")
+    console.log(curDish.name+" ordered ");
 
-    curDish = new Steak()
+    curDish = new Steak();
     kitchen.order(curDish); // Steak extends Dish (cookingTime = 7)
-    console.log(curDish.name+" ordered ")
+    console.log(curDish.name+" ordered ");
 
 
     // // Feel free to experiment with various dishes and ingridients
 
-    let fastest =await kitchen.cookFastestOrder(); // Returns fastest dish to make
-    console.log("Cooked the fastest order: " + fastest.name + " in " + fastest.cookingTime + " minutes")
+    let fastest = await kitchen.cookFastestOrder(); // Returns fastest dish to make
+    console.log("Cooked the fastest order: " + fastest.name + " in " + fastest.cookingTime + " minutes");
     let allCooked = await kitchen.cookAllOrders(); // Returns two dishes in array
     for (var i = 0; i < allCooked.length; i++) {
-        console.log("Cooked the order: " + allCooked[i].name + " in " + allCooked[i].cookingTime + " minutes")
+        console.log("Cooked the order: " + allCooked[i].name + " in " + allCooked[i].cookingTime + " minutes");
     }
 
     kitchen.order(new SteakAndFries()); // Throws Error: Not enough ingridients in fridge
